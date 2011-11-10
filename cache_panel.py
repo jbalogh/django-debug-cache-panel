@@ -68,7 +68,7 @@ class CacheWrapper(object):
 
     def __init__(self, cache):
         # These are the methods we're going to replace.
-        methods = 'add clear get set delete get_many'.split()
+        methods = 'add clear get set delete get_many set_many'.split()
 
         # Store copies of the true methods.
         self.real_methods = dict((m, getattr(cache, m)) for m in methods)
@@ -105,6 +105,10 @@ class CacheWrapper(object):
         val = self.real_methods['get_many'](keys)
         self.log[-1].hit = bool(val)
         return val
+        
+    @logged
+    def set_many(self, dict_mapping, timeout=None):
+        return self.real_methods['set_many'](dict_mapping, timeout)
 
     def clear(self):
         return self.real_methods['clear']()
