@@ -24,7 +24,8 @@ class CachePanel(DebugPanel):
         for log in wrapper.log:
             if hasattr(log, 'hit'):
                 stats[log.hit and 'hit' or 'miss'] += 1
-            stats['time'] += log.time
+            if hasattr(log, 'time'):
+                stats['time'] += log.time
 
         # No ngettext, too many combos!
         stats['time'] = round(stats['time'], 2)
