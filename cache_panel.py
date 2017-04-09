@@ -101,6 +101,10 @@ class CacheWrapper(object):
         return self.real_methods['delete'](key)
 
     @logged
+    def set_many(self, dict_mapping, timeout=None):
+        return self.real_methods['set_many'](dict_mapping, timeout)
+
+    @logged
     def get_many(self, keys):
         val = self.real_methods['get_many'](keys)
         self.log[-1].hit = bool(val)
